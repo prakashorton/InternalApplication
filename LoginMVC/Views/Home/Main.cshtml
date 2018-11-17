@@ -1,0 +1,537 @@
+﻿<div class="row">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">@ViewBag.Employee.Name - @(ViewBag.Employee.Role == 0 ? "EMPLOYEE" : "ADMIN") </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" id="btnSignOut">Sign out - @ViewBag.Employee.UserName</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1default" data-toggle="tab">Personal Details</a></li>
+                    <li id="viewApplicationTab"><a href="#tab3default" data-toggle="tab">View Application</a></li>
+                    <li id="deleteApplication">
+                        <a href="#tab2default"
+                           class="@(ViewBag.Employee.Role == 0 ? "employee" : "admin")"
+                           data-toggle="tab">Add Application</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tab1default">
+                        <div class="row">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="thumbnail">
+                                        <div class="caption">
+                                            <form class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Name</label>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control"
+                                                               id="name"
+                                                               type="text"
+                                                               disabled
+                                                               value=@ViewBag.Employee.Name
+                                                               placeholder="Enter your name...">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Email ID</label>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control"
+                                                               id="email"
+                                                               type="email"
+                                                               disabled
+                                                               value=@ViewBag.Employee.EmailId
+                                                               placeholder="Enter your Email ID...">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">User Name</label>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control"
+                                                               id="username"
+                                                               type="text"
+                                                               disabled
+                                                               value=@ViewBag.Employee.UserName
+                                                               placeholder="Enter your user name...">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Password</label>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control"
+                                                               id="password"
+                                                               type="password"
+                                                               disabled
+                                                               value=@ViewBag.Employee.Password
+                                                               placeholder="Enter your password...">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Role</label>
+                                                    <div class="col-sm-10">
+                                                        @{
+                                                            List<SelectListItem> listItems = new List<SelectListItem>();
+                                                            listItems.Add(new SelectListItem
+                                                            {
+                                                                Text = "Employee",
+                                                                Value = "0",
+                                                                Selected = ((int)@ViewBag.Employee.Role == 0) ? true : false
+                                                            });
+                                                            listItems.Add(new SelectListItem
+                                                            {
+                                                                Text = "Admin",
+                                                                Value = "1",
+                                                                Selected = ((int)@ViewBag.Employee.Role == 1) ? true : false
+                                                            });
+                                                        }
+
+                                                        @Html.DropDownList(
+                                                            "roleDD",
+                                                            listItems,
+                                                            new { @class = "form-control", @disabled = "disabled" })
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab2default">
+                        <div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control"
+                                           id="add-app-name"
+                                           placeholder="Enter the application name"
+                                           type="text">
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Description</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="2"
+                                              placeholder="Enter the application description"
+                                              id="add-app-description"
+                                              class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Version</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control"
+                                           placeholder="Enter the application version"
+                                           id="add-app-version"
+                                           type="text">
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Planned Release</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control"
+                                           id="add-app-plannedRelease"
+                                           type="date">
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Actual Release</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control"
+                                           id="add-app-actualRelease"
+                                           type="date">
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Environment</label>
+                                <div class="col-sm-10">
+                                    @{
+                                        List<SelectListItem> envlistItems = new List<SelectListItem>();
+
+                                        foreach (var env in ViewBag.UIDropDown.Environment)
+                                        {
+                                            string name = env.Name.ToString();
+                                            string id = env.Id.ToString();
+                                            envlistItems.Add(new SelectListItem
+                                            {
+                                                Text = name,
+                                                Value = id
+                                            });
+                                        }
+                                    }
+
+                                    @Html.DropDownList("add-app-environment", envlistItems,new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            @*<div class="form-group">
+                                <label class="col-sm-2 control-label">Provider</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control"
+                                           id="add-app-provider"
+                                           placeholder="Enter the application provider"
+                                           type="text">
+                                </div>
+                            </div>
+                            <br />
+                            <br />*@
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Client</label>
+                                <div class="col-sm-10">
+                                    @{
+                                        List<SelectListItem> clientlistItems = new List<SelectListItem>();
+
+                                        foreach (var env in ViewBag.UIDropDown.Client)
+                                        {
+                                            string name = env.Name.ToString();
+                                            string id = env.Id.ToString();
+                                            clientlistItems.Add(new SelectListItem
+                                            {
+                                                Text = name,
+                                                Value = id
+                                            });
+                                        }
+                                    }
+
+                                    @Html.DropDownList("add-app-client", clientlistItems, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Server</label>
+                                <div class="col-sm-10">
+                                    @{
+                                        List<SelectListItem> serverlistItems = new List<SelectListItem>();
+
+                                        foreach (var env in ViewBag.UIDropDown.Server)
+                                        {
+                                            string name = env.Name.ToString();
+                                            string id = env.Id.ToString();
+                                            serverlistItems.Add(new SelectListItem
+                                            {
+                                                Text = name,
+                                                Value = id
+                                            });
+                                        }
+                                    }
+
+                                    @Html.DropDownList("add-app-server", serverlistItems, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Technology</label>
+                                <div class="col-sm-10">
+                                    @{
+                                        List<SelectListItem> techlistItems = new List<SelectListItem>();
+
+                                        foreach (var env in ViewBag.UIDropDown.Technology)
+                                        {
+                                            string name = env.Name.ToString();
+                                            string id = env.Id.ToString();
+                                            techlistItems.Add(new SelectListItem
+                                            {
+                                                Text = name,
+                                                Value = id
+                                            });
+                                        }
+                                    }
+
+                                    @Html.DropDownList("add-app-technology", techlistItems, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Application Type</label>
+                                <div class="col-sm-10">
+                                    @{
+                                        List<SelectListItem> typelistItems = new List<SelectListItem>();
+
+                                        foreach (var env in ViewBag.UIDropDown.ApplicationType)
+                                        {
+                                            string name = env.Name.ToString();
+                                            string id = env.Id.ToString();
+                                            typelistItems.Add(new SelectListItem
+                                            {
+                                                Text = name,
+                                                Value = id
+                                            });
+                                        }
+                                    }
+
+                                    @Html.DropDownList("add-app-type", typelistItems, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                </label>
+                                <div class="col-sm-10">
+                                    <input class="btn btn-default"
+                                           id="addApplicationDOM"
+                                           type="button"
+                                           value="Add Application">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab3default">
+                        <div class="row" style="margin: 10px;">
+                            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                            <br>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr id="applicationHeader">
+                                        <th>Name</th>
+                                        <th>Version</th>
+                                        <th>View</th>
+                                        <th class="@(ViewBag.Employee.Role == 0 ? "employee" : "admin")">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myTable">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="tab4default">Default 4</div>
+                    <div class="tab-pane fade" id="tab5default">Default 5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Application Details</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Basic Information</a>
+                                </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Name</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-name"
+                                                   type="email"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Description</label>
+                                        <div class="col-sm-10">
+                                            <textarea rows="2"
+                                                      id="app-description"
+                                                      disabled
+                                                      class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Version</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-version"
+                                                   type="text"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Planned Release</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-plannedRelease"
+                                                   type="date"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Actual Release</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-actualRelease"
+                                                   type="date"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Other Details</a>
+                                </h4>
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Environment</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-environment"
+                                                   type="text"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Provider</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-provider"
+                                                   type="text"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Server</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-server"
+                                                   type="text"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Technology</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-technology"
+                                                   type="text"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Application Type</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"
+                                                   id="app-type"
+                                                   type="text"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer ">
+                    <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                </div>*@
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close closeClass" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" id="deleteApplicationConfirmation" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<style>
+    .employee {
+        display: none !important;
+    }
+
+    .padding-top-bottom {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+</style>
