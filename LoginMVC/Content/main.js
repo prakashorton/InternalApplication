@@ -78,7 +78,7 @@ $(document).ready(function () {
         };
 
         if (registerData.Name && registerData.EmailId && registerData.UserName && registerData.Password && registerData.Role) {
-            if (ValidateEmail()) {
+            if (ValidateEmail(registerData.EmailId)) {
                 $.ajax({
                     type: 'POST',
                     url: 'RegisterUser',
